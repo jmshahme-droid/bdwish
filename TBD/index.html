@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fffaf5">
+<title>For Biscotti 🤍</title>
+<style>
+:root{--bg:#fffaf5;--ink:#302722;--muted:#786d66;--accent:#a97967;--soft:#f3e6dd;--line:rgba(76,54,44,.13)}
+*{box-sizing:border-box}
+html{width:100%;height:100%;overflow:hidden}
+body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;-webkit-text-size-adjust:100%}
+button{font:inherit;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#site{width:100%;height:100%;overflow:hidden;position:relative}
+.topbar{position:fixed;top:0;left:0;right:0;height:58px;padding:calc(12px + env(safe-area-inset-top)) 17px 10px;z-index:20;pointer-events:none;background:linear-gradient(var(--bg),rgba(255,250,245,.86),transparent)}
+.progress{height:4px;border-radius:9px;background:#eaded6;overflow:hidden;max-width:520px;margin:auto}
+.progress i{display:block;height:100%;width:8.333%;background:var(--accent);transition:width .45s ease}
+.counter{font:600 10px/1.2 system-ui,sans-serif;letter-spacing:.13em;color:#9b887d;text-align:center;margin-top:7px}
+.music{position:fixed;right:14px;top:calc(60px + env(safe-area-inset-top));z-index:22;border:1px solid var(--line);background:#fffdf9e8;color:var(--ink);width:42px;height:42px;border-radius:50%;box-shadow:0 8px 24px rgba(50,35,25,.1);cursor:pointer}
+.stage{display:none;width:100%;height:100%;margin:0 auto;padding:90px 21px calc(70px + env(safe-area-inset-bottom));overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:auto;scrollbar-color:#a97967 #eaded6;scrollbar-gutter:stable;flex-direction:column;justify-content:center;position:relative}.stage.active{display:flex}.stage::-webkit-scrollbar{width:10px}.stage::-webkit-scrollbar-track{background:#eaded6;border-radius:10px}.stage::-webkit-scrollbar-thumb{background:#a97967;border-radius:10px;border:2px solid #eaded6}.stage.center{text-align:center;align-items:center}
+.eyebrow{font:700 10px/1.2 system-ui,sans-serif;letter-spacing:.19em;text-transform:uppercase;color:var(--accent);margin-bottom:13px}
+h1{font-size:clamp(48px,15vw,82px);line-height:.94;letter-spacing:-.035em;margin:0 0 17px;font-weight:600}
+h2{font-size:clamp(34px,10vw,57px);line-height:1.02;letter-spacing:-.025em;margin:0 0 18px;font-weight:600}
+p{font-size:16px;line-height:1.75;color:var(--muted);margin:10px 0}
+.center p{max-width:450px}
+.quote{margin:21px 0;padding:18px 17px;border-left:2px solid var(--accent);border-radius:0 16px 16px 0;background:rgba(243,230,221,.5);font-size:18px;line-height:1.6;color:#514239}
+.card{padding:19px;margin:9px 0;border:1px solid var(--line);background:rgba(255,255,255,.62);border-radius:20px;box-shadow:0 12px 34px rgba(70,48,38,.055)}
+.card strong{display:block;font-size:16px;margin-bottom:7px}.card p{margin:0}
+.btn{border:0;border-radius:999px;padding:13px 21px;min-height:48px;background:var(--ink);color:#fff;cursor:pointer;box-shadow:0 8px 24px rgba(48,39,34,.12);margin-top:18px}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.btn:active{transform:scale(.98)}
+.timeline{margin:16px 0}.month{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);line-height:1.55;color:var(--muted)}.month b{min-width:50px;font:700 10px/1.5 system-ui,sans-serif;letter-spacing:.12em;color:var(--accent)}
+.reveal{width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:18px;padding:16px 17px;margin:6px 0;color:var(--ink);cursor:pointer}.reveal span{display:block;color:var(--muted);font-size:14px;line-height:1.55;margin-top:5px;max-height:0;overflow:hidden;opacity:0;transition:max-height .4s ease,opacity .35s ease}.reveal.open span{max-height:100px;opacity:1}
+/* Gallery: the frame follows the photo. No fixed frame, no object-fit cropping. */
+.album{text-align:center;width:100%;margin:5px auto 0}
+.photo-frame{display:inline-block;max-width:100%;padding:8px;background:#fff;border:1px solid #e5d8cf;border-radius:7px;box-shadow:0 16px 35px rgba(62,43,33,.12);vertical-align:top}
+.photo-frame img{display:block;width:auto;height:auto;max-width:calc(100vw - 58px);max-height:68svh;object-fit:contain;border-radius:2px}
+.photo-info{display:flex;justify-content:space-between;gap:10px;margin:12px 2px 0;color:#89786e;font:600 11px/1.4 system-ui,sans-serif;letter-spacing:.03em;text-align:left}.caption{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.photo-nav{display:flex;gap:8px;margin-top:12px}.photo-nav .btn{flex:1;margin-top:0}
+.swipe-note{font:11px/1.4 system-ui,sans-serif;color:#a18d80;margin-top:8px}
+.envelope{width:min(100%,390px);margin:20px auto 0;padding:28px 20px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#fff,#f5e7de);box-shadow:0 15px 45px rgba(80,55,44,.09);cursor:pointer;text-align:center}.seal{font-size:29px;margin-bottom:9px}.letter{display:none;text-align:left}.letter.open{display:block;animation:in .55s ease}.letter .btn{display:block;margin-left:auto;margin-right:auto}
+.final{text-align:center}.final .line{opacity:0;transform:translateY(14px);animation:line .8s ease forwards;max-width:465px;margin:18px auto}.final .line:nth-of-type(2){animation-delay:.65s}.final .line:nth-of-type(3){animation-delay:1.3s}.final .line:nth-of-type(4){animation-delay:1.85s}.signature{opacity:0;animation:line .8s 2.3s ease forwards;color:var(--accent);font-style:italic;margin-top:28px}
+.fade{animation:in .65s ease}@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@keyframes line{to{opacity:1;transform:none}}
+@media(max-height:680px){.stage{padding-top:80px;padding-bottom:70px}.photo-frame img{max-height:61svh}}
+@media(min-width:700px){.stage{padding-left:32px;padding-right:32px}}
+
+/* Birthday shower */
+.confetti{position:fixed;top:-18px;width:8px;height:14px;z-index:100;pointer-events:none;border-radius:2px;animation:confettiFall 3.8s linear forwards}
+@keyframes confettiFall{to{transform:translate3d(var(--drift),110vh,0) rotate(720deg);opacity:0}}
+.photo-info{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;margin:13px auto 0;width:min(100%,520px)}
+.photo-info .caption{font-family:"Playfair Display",Georgia,serif;font-size:clamp(18px,5vw,23px);line-height:1.35;color:#4b3a32;padding:0 10px}
+.photo-counter{font-size:12px;letter-spacing:.14em;color:#9b8275}
+.photo-nav{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:15px}
+.photo-nav .arrow-btn{width:50px;height:50px;min-height:50px;padding:0;border-radius:50%;font-size:28px;line-height:1;display:grid;place-items:center}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="progress"><i id="progressBar"></i></div><div class="counter" id="stageCounter">01 / 12</div></div>
+<button class="music" id="musicBtn" aria-label="Play music">♫</button>
+<audio id="audio" loop preload="none"><source src="music.mp3" type="audio/mpeg"></audio>
+
+<main id="site">
+<section class="stage center fade"><div class="eyebrow">For Biscotti 🤍</div><h1>Before you start…</h1><p>Turn your volume up.</p><div class="card"><strong>A little something I made for you.</strong><p>I could've just wished you Happy Birthday. But you didn't give me an ordinary birthday wish either.</p></div><button class="btn next">Begin →</button></section>
+<section class="stage center"><div class="eyebrow">A little payback</div><h2>You made my birthday feel special.</h2><p>You counted the minutes with me. A message every minute. And then those last few messages that somehow meant even more.</p><p>So now it's my turn.</p><button class="btn next">Let me show you →</button></section>
+<section class="stage"><div class="eyebrow">The name you gave me</div><h2>Some people call me Janmejay.</h2><div class="quote">You somehow decided <strong>Jalankuraww</strong> was better. 😭</div><p>And honestly, the fact that a name can become an inside joke, a memory and a tiny piece of “us” is exactly why I wanted this page to be ours.</p><button class="btn next">Keep going →</button></section>
+<section class="stage"><div class="eyebrow">Nine months</div><h2>It hasn't been years.</h2><p>It hasn't needed years either.</p><p>Nine months somehow became enough time for jokes, random conversations, memories, stupid moments and a person becoming a very real part of my life.</p><div class="timeline"><div class="month"><b>THEN</b><span>We were just getting to know each other.</span></div><div class="month"><b>THEN</b><span>Somehow there were already too many things to remember.</span></div><div class="month"><b>NOW</b><span>And here I am, making you a whole website. 😂</span></div></div><button class="btn next">The memories →</button></section>
+<section class="stage"><div class="eyebrow">Very sensible adventures</div><h2>Some memories don't need an explanation.</h2><div class="card"><strong>🛵 The struggle to get you out</strong><p>Somehow, just getting you out of the house with Durva was an adventure of its own. And once we finally managed it… triple-sit. 😂</p></div><div class="card"><strong>🌿 Smritivan</strong><p>A walk, a place, a normal day — except the people and little moments made it something worth remembering.</p></div><p>Those are the memories that stay: the ones that weren't supposed to become memories in the first place.</p><button class="btn next">Show me the album →</button></section>
+<section class="stage"><div class="eyebrow">Memory album</div><h2>For the moments I don't want to forget.</h2><div class="album"><div class="photo-frame"><img id="galleryImage" src="assets/memory-1.jpg" alt="Trusha memory"></div><div class="photo-info"><span class="photo-counter" id="photoCounter">01 / 10</span><span class="caption" id="photoCaption">Biscotti being Biscotti 🤍</span></div><div class="photo-nav"><button class="btn ghost arrow-btn" id="prevPhoto" aria-label="Previous photo">‹</button><button class="btn arrow-btn" id="nextPhoto" aria-label="Next photo">›</button></div><div class="swipe-note">Swipe left or right on the photo</div></div><p>Every photo doesn't need a story. Some are special simply because they're yours.</p><button class="btn next">There's more →</button></section>
+<section class="stage"><div class="eyebrow">Things that are very you</div><h2>And somehow… that's the point.</h2><button class="reveal"><strong>The expressions.</strong><span>There is always an expression. Always. 😂</span></button><button class="reveal"><strong>The drama.</strong><span>Sometimes unnecessary. Usually entertaining.</span></button><button class="reveal"><strong>The random moments.</strong><span>The things that make absolutely no sense later but make you laugh now.</span></button><button class="reveal"><strong>The way you make ordinary things memorable.</strong><span>That's probably one of my favourite things.</span></button><button class="btn next">One more thing →</button></section>
+<section class="stage"><div class="eyebrow">What I appreciate</div><h2>There are things I don't say enough.</h2><div class="card"><p>I appreciate the comfort of being able to be myself around you.</p></div><div class="card"><p>I appreciate the little conversations that somehow turn into memories.</p></div><div class="card"><p>And I appreciate that, somewhere along the way, you became someone whose happiness genuinely matters to me.</p></div><button class="btn next">Slow down →</button></section>
+<section class="stage center"><div class="eyebrow">A quieter moment</div><h2>Among all the jokes and memories…</h2><p>there is one thing I don't want this website to hide behind all the fun.</p><div class="quote">You matter to me. More than a simple birthday message could ever explain.</div><button class="btn next">There's a letter for you →</button></section>
+<section class="stage center"><div class="eyebrow">A letter</div><h2>There's something I've never properly said.</h2><div class="envelope" id="envelope"><div class="seal">💌</div><strong>Open when you're ready.</strong><p>It's only for Biscotti.</p></div><div class="letter" id="letter"><p>Dear Trusha,</p>
+        <p>Happy Birthday. Nine months isn't some enormous number, but when I look at everything that happened in those nine months, it somehow feels like we've known each other for much longer.</p>
+        <p>You've become one of those people I can talk to without having to think too much about what to say. I can tell you what I'm feeling, overthink completely unnecessary things with you, and somehow you still get it — because you do the same with me.</p>
+        <p>I love the little things about you too. Your eyes. Your personality. Your way of talking. That childish side of you. And honestly, all the random little things that make you <i>you</i>.</p>
+        <p>I don't know what the next months or years will look like, but I do know that I'm grateful for these nine months and for the person you've become in my life.</p>
+        <p>So on your birthday, I just want you to be happy, laugh a lot, keep being your wonderfully childish self, and make many more memories.</p><p>I will alway love You!! Thanks for being with me...</p>
+        <p>Happy Birthday, Biscotti. 🤍</p>
+        <p class="sign">— Janmejay</p><button class="btn next">One last thing →</button></div></section>
+<section class="stage center"><div class="eyebrow">If you ever forget</div><h2>Come back to this page.</h2><p>Not because you need a birthday wish again.</p><p>Because sometimes people need a reminder of what they mean to someone.</p><button class="btn next">Remember this →</button></section>
+<section class="stage final center"><div class="eyebrow">For you, Biscotti</div><h2>Whatever happens next…</h2><p class="line">No matter where life takes us, I want you to know one thing — I'm always with you, by the soul.</p><p class="line">Whenever you need me, I'll be there.</p><p class="line"><strong>And for a lifetime… I'm yours. 🤍</strong></p><p class="line">Happy Birthday, Trusha. 🎂</p><button class="btn" id="surpriseBtn">One last surprise 🎉</button><div class="signature">— Your Jalankuraww 😭</div></section>
+</main>
+<script>
+const stages=[...document.querySelectorAll('.stage')];
+let current=0;
+const bar=document.getElementById('progressBar');
+const counter=document.getElementById('stageCounter');
+
+function updateProgress(){
+  bar.style.width=((current+1)/stages.length*100)+'%';
+  counter.textContent=String(current+1).padStart(2,'0')+' / '+String(stages.length).padStart(2,'0');
+}
+function go(n){
+  const next=Math.max(0,Math.min(stages.length-1,n));
+  if(next===current) return;
+  stages[current].classList.remove('active');
+  current=next;
+  stages[current].scrollTop=0;
+  stages[current].classList.add('active');
+  updateProgress();
+}
+stages.forEach((s,i)=>s.classList.toggle('active',i===0));
+document.querySelectorAll('.next').forEach(b=>b.addEventListener('click',()=>go(current+1)));
+const photos=[
+ ['assets/memory-1.jpg','Biscotti being Biscotti 🤍'],['assets/memory-2.jpg','One of those faces 😂'],['assets/memory-3.jpg','The eyes. I told you.'],['assets/memory-4.jpg','A little dramatic'],['assets/memory-5.jpg','Just you. 🤍'],['assets/memory-6.jpg','Another little memory'],['assets/memory-7.jpg','This one makes me smile'],['assets/memory-8.jpg','One more for the album'],['assets/memory-9.jpg','A memory worth keeping'],['assets/memory-10.jpg','And another one 🤍']
+];
+let photo=0;const img=document.getElementById('galleryImage');
+function renderPhoto(){img.src=photos[photo][0];img.alt=photos[photo][1];document.getElementById('photoCounter').textContent=String(photo+1).padStart(2,'0')+' / '+String(photos.length).padStart(2,'0');document.getElementById('photoCaption').textContent=photos[photo][1];img.onload=()=>{}}
+function changePhoto(d){photo=(photo+d+photos.length)%photos.length;renderPhoto()}
+document.getElementById('prevPhoto').onclick=()=>changePhoto(-1);document.getElementById('nextPhoto').onclick=()=>changePhoto(1);
+let touchX=0;img.addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX},{passive:true});img.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>45)changePhoto(dx<0?1:-1)},{passive:true});
+document.querySelectorAll('.reveal').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('open')));
+document.getElementById('envelope').onclick=()=>{document.getElementById('envelope').style.display='none';document.getElementById('letter').classList.add('open')};
+const audio=document.getElementById('audio'),musicBtn=document.getElementById('musicBtn');
+let musicOn=false;function toggleMusic(){if(audio.paused){audio.play().then(()=>{musicOn=true;musicBtn.textContent='❚❚';musicBtn.setAttribute('aria-label','Pause music')}).catch(()=>{})}else{audio.pause();musicOn=false;musicBtn.textContent='♫';musicBtn.setAttribute('aria-label','Play music')}}
+musicBtn.onclick=toggleMusic;
+function firstInteraction(){if(audio.paused){audio.play().then(()=>{musicOn=true;musicBtn.textContent='❚❚'}).catch(()=>{})}document.removeEventListener('click',firstInteraction)}
+document.addEventListener('click',firstInteraction,{once:true});
+updateProgress();
+
+function celebrate(){
+  const pieces=["#e4aa45","#efabb3","#9ab79f","#9bb0d1","#d98e74","#f1d276"];
+  for(let i=0;i<100;i++){
+    const c=document.createElement("span");
+    c.className="confetti";
+    c.style.left=(Math.random()*100)+"vw";
+    c.style.background=pieces[Math.floor(Math.random()*pieces.length)];
+    c.style.animationDelay=(Math.random()*.8)+"s";
+    c.style.setProperty("--drift",((Math.random()-.5)*24)+"vw");
+    c.style.transform="rotate("+(Math.random()*180)+"deg)";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4600);
+  }
+}
+document.getElementById("surpriseBtn")?.addEventListener("click",celebrate);
+</script>
+</body>
+</html>
